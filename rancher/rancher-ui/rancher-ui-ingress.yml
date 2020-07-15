@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rancher-webui-ingress
+  namespace: default
+spec:
+  rules:
+    - host: rancher.deoooo.me
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: rancher-webui-8080
+              servicePort: 8080
+
