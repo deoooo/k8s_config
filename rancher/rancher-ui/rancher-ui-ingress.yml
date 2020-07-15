@@ -4,6 +4,10 @@ metadata:
   name: rancher-webui-ingress
   namespace: default
 spec:
+  tls:
+    - hosts:
+        - rancher.deoooo.me
+      secretName: rancher-webui-tls-secret
   rules:
     - host: rancher.deoooo.me
       http:
