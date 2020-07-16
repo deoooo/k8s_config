@@ -36,4 +36,6 @@ spec:
     - port: 4000
       protocol: TCP
       targetPort: 4000
+  selector:
+    run: deo-blog
   clusterIP: None
