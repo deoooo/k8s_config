@@ -23,7 +23,7 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: "100m"
+              cpu: "500m"
               memory: "200Mi"
       restartPolicy: Always
 ---
