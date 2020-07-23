@@ -15,4 +15,4 @@ spec:
           - path: /
             backend:
               serviceName: deo-blog
-              servicePort: 4000
+              servicePort: 8080

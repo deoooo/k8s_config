@@ -16,10 +16,10 @@ spec:
         - name: deo-docker
       containers:
         - name: deo-blog
-          image: aa864451000/hexo-blog:master
+          image: aa864451000/vuepress-blog:master
           imagePullPolicy: Always
           ports:
-            - containerPort: 4000
+            - containerPort: 8080
               protocol: TCP
           resources:
             limits:
@@ -33,9 +33,9 @@ metadata:
   name: deo-blog
 spec:
   ports:
-    - port: 4000
+    - port: 8080
       protocol: TCP
-      targetPort: 4000
+      targetPort: 8080
   selector:
     run: deo-blog
   clusterIP: None
