@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deo-evaluation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: deo-evaluation
+  template:
+    metadata:
+      labels:
+        run: deo-evaluation
+    spec:
+      imagePullSecrets:
+        - name: deo-docker
+      restartPolicy: Always
+      containers:
+        - name: deo-evaluation
+          image: aa864451000/360-evaluation:master
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "200Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deo-evaluation
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    run: deo-evaluation
+  clusterIP: None

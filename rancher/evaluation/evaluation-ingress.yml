@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: deo-evaluation-ingress
+  namespace: default
+spec:
+  rules:
+    - host: evaluation.deoooo.me
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: deo-evaluation
+              servicePort: 8080
+
