@@ -4,6 +4,10 @@ metadata:
   name: deo-evaluation-ingress
   namespace: default
 spec:
+  tls:
+    - hosts:
+        - evaluation.deoooo.me
+      secretName: evaluation-deoooo-me-tls-secret
   rules:
     - host: evaluation.deoooo.me
       http:

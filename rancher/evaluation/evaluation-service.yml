@@ -12,12 +12,14 @@ spec:
       labels:
         run: deo-evaluation
     spec:
+      nodeSelector:
+        name: deo
       imagePullSecrets:
-        - name: deo-docker
+        - name: deo-tc-docker
       restartPolicy: Always
       containers:
         - name: deo-evaluation
-          image: aa864451000/360-evaluation:master
+          image: deoooo.tencentcloudcr.com/deo/360-evaluation:master
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
