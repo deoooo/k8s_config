@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: List
+items:
+  - kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: dvvb-vue
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          run: dvvb-vue
+      template:
+        metadata:
+          labels:
+            run: dvvb-vue
+        spec:
+            imagePullSecrets:
+              - name: dvvb-dockerhub
+            containers:
+              - name: dvvb-vue
+                image: dockerdvvb/dvvb:vue-#{Build.BuildNumber}#
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 80
+                    protocol: TCP
+                resources:
+                  limits:
+                    cpu: "200m"
+                    memory: "200Mi"
+            restartPolicy: Always
+            nodeName: dvvb-node
+          
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      name: dvvb-vue
+    spec:
+      ports:
+        - port: 80
+          protocol: TCP
+          targetPort: 80
+      selector:
+        run: dvvb-vue
+      clusterIP: None
+      
+  - kind: Ingress
+    apiVersion: extensions/v1beta1
+    metadata:
+      name: dvvb-nginx-ingress
+      namespace: default
+    spec:
+      tls:
+        - hosts:
+            - www.dvvb.xyz
+          secretName: dvvb-xyz-tls-secret
+      rules:
+        - host: www.dvvb.xyz
+          http:
+            paths:
+              - path: /
+                backend:
+                  serviceName: dvvb-vue
+                  servicePort: 80

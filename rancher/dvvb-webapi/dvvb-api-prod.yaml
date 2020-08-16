@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: List
+items:
+  - kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: dvvb-api
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          run: dvvb-api
+      template:
+        metadata:
+          labels:
+            run: dvvb-api
+        spec:
+            imagePullSecrets:
+              - name: dvvb-dockerhub
+            containers:
+              - name: dvvb-api
+                image: dockerdvvb/dvvb:webapi-#{Build.BuildNumber}#
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 80
+                    protocol: TCP
+                resources:
+                  limits:
+                    cpu: "200m"
+                    memory: "200Mi"
+            restartPolicy: Always
+            nodeName: server
+          
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      name: dvvb-api
+    spec:
+      ports:
+        - port: 80
+          protocol: TCP
+          targetPort: 80
+      selector:
+        run: dvvb-api
+      clusterIP: 172.93.188.136
+      type: NodePort
+      
